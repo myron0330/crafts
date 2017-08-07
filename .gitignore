@@ -102,3 +102,6 @@ ENV/
 
 # pyc
 .pyc
+
+# idea
+.idea
