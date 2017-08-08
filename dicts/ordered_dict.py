@@ -1,36 +1,7 @@
 # -*- coding: UTF-8 -*-
 # **********************************************************************************#
-#     File: Magic dict file
+#     File: Ordered dict file
 # **********************************************************************************#
-
-
-class DefaultDict(dict):
-
-    """
-    A dict that allows set default value for any key(exist or in-exist).
-    """
-    def __init__(self, default=None):
-        """
-        Args:
-            default(class or object): the specified default type or instance.
-        """
-        super(DefaultDict, self).__init__()
-        self._default = default
-
-    def __missing__(self, key):
-        default = self._default() if isinstance(self._default, type) else self._default
-        self.__setitem__(key, default)
-        return self.__getitem__(key)
-
-
-class CompositeDict(dict):
-
-    """
-    A dict that allows to be used as a composite one without tedious initialization.
-    """
-    def __missing__(self, key):
-        self.__setitem__(key, CompositeDict())
-        return self.__getitem__(key)
 
 
 class OrderedDict(dict):
@@ -46,7 +17,7 @@ class OrderedDict(dict):
         cls.__pop__ = \
             (lambda obj, item, default=0: obj.__orders__.pop(item) if item in range(len(obj.__orders__)) else default)
         cls.__inner_dict__ = dict()
-        return super(OrderedDict, cls).__new__(cls, *args)
+        return super(OrderedDict, cls).__new__(OrderedDict, *args)
 
     def __setitem__(self, key, value):
         self.__append__(key)
@@ -176,24 +147,3 @@ class OrderedDict(dict):
     def __repr__(self):
         return "{{{}}}".format(
             '\t'.join(map(str, self.items())).replace(',', ':').replace('(', '').replace(')', '').replace('\t', ', '))
-
-
-class AttributeDict(dict):
-
-    """
-    A dict that allows direct attribute access to its keys.
-    """
-
-    def __getattr__(self, item):
-        if item in self.__dict__:
-            return self.__dict__.__getitem__(item)
-        elif item in self:
-            return self.__getitem__(item)
-        else:
-            raise AttributeError("'dict' object has no attribute '{}'".format(item))
-
-    def __setattr__(self, key, value):
-        if key in self.__dict__:
-            self.__dict__.__setitem__(key, value)
-        elif key in self:
-            self.__setitem__(key, value)
