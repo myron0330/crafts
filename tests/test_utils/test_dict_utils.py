@@ -3,8 +3,10 @@
 #     File: Dicts test file
 # **********************************************************************************#
 import unittest
+
 from nose_parameterized import param, parameterized
-from dicts import DefaultDict, CompositeDict, OrderedDict, AttributeDict
+
+from utils.dicts import DefaultDict, CompositeDict, OrderedDict, AttributeDict
 
 
 class TestDefaultDict(unittest.TestCase):

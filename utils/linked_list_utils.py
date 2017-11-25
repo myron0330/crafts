@@ -1,10 +1,17 @@
 # -*- coding: UTF-8 -*-
 # **********************************************************************************#
-#     File: Data structure utils
+#     File: A realization of bi-side linked list
 # **********************************************************************************#
 
 
 def recursive(formula, formatter=(lambda x: None)):
+    """
+    Decorator for doing recursive formula.
+
+    Args:
+        formula: iterative formula function
+        formatter: return value format in each iteration
+    """
     def decorator(func):
         def _recursive(node, *args, **kwargs):
             if node.tail:
@@ -18,7 +25,12 @@ def recursive(formula, formatter=(lambda x: None)):
 
 
 def traversal(returnable=True):
+    """
+    Decorator for traversal the linked list for doing some operation.
 
+    Args:
+        returnable(boolean): whether to return the result.
+    """
     def decorator(func):
         def _traversal(node, *args, **kwargs):
             while node:
@@ -36,6 +48,9 @@ def traversal(returnable=True):
 
 
 class Node(object):
+    """
+    Node
+    """
     def __init__(self, obj, head=None, tail=None):
         self.head = head
         self.tail = tail
@@ -47,7 +62,9 @@ class Node(object):
 
 
 class LinkedList(object):
-
+    """
+    Linked list
+    """
     def __init__(self, link_head=None, link_tail=None):
         self.link_head = link_head
         self.link_tail = link_tail
